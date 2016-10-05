@@ -24,12 +24,12 @@
                             value="#{userBean.topMessage}"/></p>
                     <h:form>
                         <h:panelGrid columns="3" cellpadding="4">
-
                             <p:outputLabel for="email" value="Email:"/>
                             <p:inputText id="email"
                                          value="#{userBean.email}"
                                          validatorMessage="Invalid Email format"
-                                         label="Email" required="true"
+                                         label="Email" 
+                                         required="true"
                                          requiredMessage="An Email is required"
                                          title="Enter your email (e.g. xxx@xxx.xxx)"
                                          maxlength="30">
@@ -77,11 +77,14 @@
                                          title="Enter your cellphone number as XXX-XXX-XXXX"/>
                             <p:message for="cellphone"/>
 
-                            <p:commandButton value="Reset" type="reset" style="width:100px;float:right"/>
-                            
-                            <p:commandButton id="submitBtn" actionListener="#{userBean.signUp}"
+                            <p:commandButton value="Reset" 
+                                             type="reset" 
+                                             style="width:100px;float:right"/>                        
+                            <p:commandButton id="submitBtn" 
+                                             actionListener="#{userBean.signUp}"
                                              value="Create Account"
-                                             onclick="PF('bui').show()" oncomplete="PF('bui').hide()"
+                                             onclick="PF('bui').show()" 
+                                             oncomplete="PF('bui').hide()"
                                              style="width:200px;float:right"/>
                         </h:panelGrid>
                         <br/><br/>

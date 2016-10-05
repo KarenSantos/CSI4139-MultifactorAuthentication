@@ -23,30 +23,39 @@
                             id="topMessage" 
                             value="#{loginControl.topMessage}"/></p>
                     <h:form>
-                        <h:panelGrid columns="2" cellpadding="5">
+                        <h:panelGrid columns="3" cellpadding="5">
                             <p:outputLabel for="email" value="Email:" />
-                            <p:inputText 
-                                id="email" 
-                                value="#{loginControl.email}" 
-                                required="true" 
-                                requiredMessage="An Email is required" 
-                                size="30"
-                                maxlength="30"
-                                label="email" />
+                            <p:inputText id="email" 
+                                         value="#{loginControl.email}"
+                                         validatorMessage="Invalid Email format"
+                                         label="email" 
+                                         required="true" 
+                                         requiredMessage="An Email is required" 
+                                         title="Enter your email (e.g. xxx@xxx.xxx)"
+                                         maxlength="30"
+                                         size="30">
+                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                <p:ajax event="keyup" update="emailMsg"/>
+                            </p:inputText>
+                            <p:message id="emailMsg" for="email"/>
 
                             <p:outputLabel for="password" value="Password:" />
                             <p:password id="password" 
                                         value="#{loginControl.password}" 
+                                        promptLabel="Enter Password"
                                         required="true" 
                                         requiredMessage="A password is required" 
                                         size="30"
                                         maxlength="10"
                                         label="password" />
-
-                            <f:facet name="footer">
-                                <p:commandButton value="Login" action="#{loginControl.login}" style="width:100px;float:right"/>
-                                <p:commandButton value="Reset" type="reset" style="width:100px;float:right"/>
-                            </f:facet>
+                            <p>
+                                <p:commandButton value="Reset" 
+                                                 type="reset" 
+                                                 style="width:100px;float:right"/>
+                                <p:commandButton value="Login" 
+                                                 action="#{loginControl.login}" 
+                                                 style="width:100px;float:right"/>
+                            </p>
                         </h:panelGrid>
                         <h:messages styleClass="errorMessage" globalOnly="true"/>
                         <p><h:outputText  
