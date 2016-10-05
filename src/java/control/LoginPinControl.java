@@ -14,9 +14,9 @@ import model.UserAccount;
  * @author karensaroc
  */
 @ManagedBean
-@Named(value = "login2Control")
+@Named(value = "loginPinControl")
 @SessionScoped
-public class Login2Control {
+public class LoginPinControl {
 
     private UserAccount user;
     private DataManager manager;
@@ -24,7 +24,7 @@ public class Login2Control {
     private String topMessage;
     private String errorMessage;
 
-    public Login2Control() {
+    public LoginPinControl() {
         clearMessages();
         try {
             manager = DataManager.getInstance();

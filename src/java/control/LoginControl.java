@@ -84,7 +84,7 @@ public class LoginControl {
                 if (user != null) {
                     if (encryptedPW.equals(user.getPassword())) {
                         topMessage = "login successful";
-                        returnPage = "login2";
+                        returnPage = "loginPin";
                     } else {
                         clearMessages();
                         errorMessage = "Incorrect password or email.";

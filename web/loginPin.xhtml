@@ -21,13 +21,13 @@
                     <p><h:outputText  
                             style="color:royalblue; font-size: large; font-weight: bold" 
                             id="topMessage" 
-                            value="#{login2Control.topMessage}"/></p>
+                            value="#{loginPinControl.topMessage}"/></p>
                     <h:form>
                         <h:panelGrid columns="2" cellpadding="5">
                             <p:outputLabel for="pin" value="PIN:" />
                             <p:inputText 
                                 id="pin" 
-                                value="#{login2Control.pin}" 
+                                value="#{loginPinControl.pin}" 
                                 required="true" 
                                 requiredMessage="A PIN number is required" 
                                 size="30"
@@ -35,14 +35,14 @@
                                 label="pin" />
 
                             <f:facet name="footer">
-                                <p:commandButton value="Login" action="#{loginControl.login}" style="width:100px;float:right"/>
+                                <p:commandButton value="Login" action="#{loginPinControl.login}" style="width:100px;float:right"/>
                                 <p:commandButton value="Reset" type="reset" style="width:100px;float:right"/>
                             </f:facet>
                         </h:panelGrid>
                         <p><h:outputText  
                                 style="color:red; font-size: large; font-weight: bold" 
                                 id="error" 
-                                value="#{loginControl.errorMessage}"/></p>               
+                                value="#{loginPinControl.errorMessage}"/></p>               
                     </h:form>
                 </div>
             </ui:define>
