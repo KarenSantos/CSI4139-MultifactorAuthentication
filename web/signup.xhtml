@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:body>
+
+        <ui:composition template="./template.xhtml">
+
+            <ui:define name="left">
+                <p><p:button outcome="signup" value="Sign Up"></p:button></p>
+                <p><p:button outcome="login" value="Login"></p:button></p>
+            </ui:define>
+            
+            <ui:define name="content">
+                <div style="position:fixed;left: 500px">
+                    <h2>Sign Up</h2>
+                    <p><h:outputText  
+                            style="color:royalblue; font-size: large; font-weight: bold" 
+                            id="topMessage" 
+                            value="#{userBean.topMessage}"/></p>
+                    <h:form>
+                        <h:panelGrid columns="3" cellpadding="4">
+
+                            <p:outputLabel for="email" value="Email:"/>
+                            <p:inputText id="email"
+                                         value="#{userBean.email}"
+                                         validatorMessage="Invalid Email format"
+                                         label="Email" required="true"
+                                         requiredMessage="An Email is required"
+                                         title="Enter your email (e.g. xxx@xxx.xxx)"
+                                         maxlength="30">
+                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                <p:ajax event="keyup" update="emailMsg"/>
+                            </p:inputText>
+                            <p:message id="emailMsg" for="email"/>
+
+                            <p:outputLabel for="password" value="Password:"/>
+                            <p:password id="password"
+                                        value="#{userBean.password}"
+                                        feedback="true"
+                                        promptLabel="Enter Password"
+                                        weakLabel="Weak Password"
+                                        goodLabel="Good Password"
+                                        strongLabel="Strong Password"
+                                        match="confPwd" 
+                                        required="true"
+                                        requiredMessage="A Password is required"
+                                        maxlength="10"/>
+                            <p:message for="password"/>
+
+                            <p:outputLabel for="confPwd" value="Confirm Password:"/>
+                            <p:password id="confPwd"
+                                        value="#{userBean.password}"
+                                        required="true"
+                                        title="Repeat password as above"
+                                        requiredMessage="You need to confirm your password"
+                                        maxlength="10"/>
+                            <p:message for="confPwd"/>
+
+                            <p:outputLabel for="firstName" value="First Name:"/>
+                            <p:inputText id="firstName"
+                                         value="#{userBean.firstName}"
+                                         required="true"
+                                         requiredMessage="A name is required"
+                                         maxlength="20"/>
+                            <p:message for="firstName"/>
+
+                            <p:outputLabel for="cellphone" value="Cellphone Number:"/>
+                            <p:inputText id="cellphone"
+                                         value="#{userBean.cellphone}"
+                                         maxlength="12"
+                                         title="Enter your cellphone number as XXX-XXX-XXXX"/>
+                            <p:message for="cellphone"/>
+
+                            <p:commandButton value="Reset" type="reset" style="width:100px;float:right"/>
+                            <p:commandButton id="submitBtn" actionListener="#{userBean.signUp}"
+                                             value="Create Account"
+                                             onclick="PF('bui').show()" oncomplete="PF('bui').hide()"
+                                             style="width:200px;float:right"/>
+                        </h:panelGrid>
+                        <br/><br/>
+                    </h:form>
+                    <p><h:outputText  
+                            style="color:royalblue; font-size: large; float:left;font-weight: bold" 
+                            id="status" 
+                            value="#{userBean.addingStatus}"/></p>
+                </div>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>
