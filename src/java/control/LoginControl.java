@@ -80,11 +80,11 @@ public class LoginControl {
         try {
             encryptedPW = ps.encrypt(password);
             try {
-                UserAccount user = manager.findUser(email);
+                UserAccount user = manager.login(email);
                 if (user != null) {
                     if (encryptedPW.equals(user.getPassword())) {
                         topMessage = "login successful";
-                        returnPage = "main";
+                        returnPage = "login2";
                     } else {
                         clearMessages();
                         errorMessage = "Incorrect password or email.";
@@ -104,7 +104,6 @@ public class LoginControl {
             clearMessages();
             errorMessage = "An error has occured. Try again later.";
         }
-
         return returnPage;
     }
 

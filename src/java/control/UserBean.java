@@ -98,23 +98,28 @@ public class UserBean implements Serializable {
             Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
             addingStatus = "Error trying to connect to the Database. \nTry again later.";
         }
-        if (!manager.isRegistered(email)) {
-            PasswordService ps = null;
-            while (ps == null) {
-                ps = PasswordService.getInstance();
+        try {
+            if (!manager.isRegistered(email)) {
+                PasswordService ps = null;
+                while (ps == null) {
+                    ps = PasswordService.getInstance();
+                }
+                String encryptedPW = "";
+                try {
+                    encryptedPW = ps.encrypt(password);
+                    UserAccount user = new UserAccount(encryptedPW, firstName, email, cellphone);
+                    manager.register(user);
+                    this.addingStatus = "User profile created successfully";
+                } catch (Exception ex) {
+                    addingStatus = "Error trying to create account. \nTry again later.";
+                    Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                addingStatus = "This email account already exists.";
             }
-            String encryptedPW = "";
-            try {
-                encryptedPW = ps.encrypt(password);
-                UserAccount user = new UserAccount(encryptedPW, firstName, email, cellphone);
-                manager.register(user);
-                this.addingStatus = "User profile created successfully";
-            } catch (Exception ex) {
-                addingStatus = "Error trying to create account. \nTry again later.";
-                Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            addingStatus = "This email account already exists.";
+        } catch (IOException ex) {
+            Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
+            addingStatus = "Error trying to connect to the Database.\nPlease try again later.";
         }
         return null;
     }

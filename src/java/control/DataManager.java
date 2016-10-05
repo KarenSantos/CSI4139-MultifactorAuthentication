@@ -19,6 +19,8 @@ public class DataManager {
     private static DataManager instance;
     private final String userDataPath = "web/resources/DB/userData/userData.txt";
     private final String passwordPath = "web/resources/DB/password/pwd.txt";
+    
+    private UserAccount currentUser;
 
     private DataManager() throws IOException {
         ///Applications/NetBeans/glassfish-4.1/glassfish/domains/domain1/config
@@ -60,8 +62,17 @@ public class DataManager {
     public boolean isRegistered(String email) throws IOException {
         return findUser(email) != null;
     }
+    
+    public UserAccount login(String email) throws IOException{
+        currentUser = findUser(email);
+        return currentUser;
+    }
+    
+    public UserAccount getCurrentUser(){
+        return currentUser;
+    }
 
-    public UserAccount findUser(String email) throws FileNotFoundException, IOException {
+    private UserAccount findUser(String email) throws FileNotFoundException, IOException {
         UserAccount user = null;
         String currentLine;
         String currentPassword;
