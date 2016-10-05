@@ -24,16 +24,12 @@ public class DataManager {
 
     private DataManager() throws IOException {
         ///Applications/NetBeans/glassfish-4.1/glassfish/domains/domain1/config
-        System.out.println("inside DataManager");
 
         File userFile = new File(userDataPath);
         if (userFile.getParentFile() != null) {
             userFile.getParentFile().mkdirs();
         }
         userFile.createNewFile();
-        System.out.println("created file");
-        System.out.println(userFile.exists());
-        System.out.println(userFile.getAbsolutePath());
 
         File passwordFile = new File(passwordPath);
         if (passwordFile.getParentFile() != null) {

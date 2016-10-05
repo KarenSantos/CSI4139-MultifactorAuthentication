@@ -5,10 +5,10 @@
 package control;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import model.UserAccount;
 
@@ -16,10 +16,9 @@ import model.UserAccount;
  *
  * @author karensaroc
  */
-@ManagedBean
-@Named(value = "controller")
-@RequestScoped
-public class Controller {
+@Named("controller")
+@SessionScoped
+public class Controller implements Serializable{
 
     private DataManager manager;
     private String topMessage;

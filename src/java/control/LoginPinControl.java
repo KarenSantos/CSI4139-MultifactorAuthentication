@@ -2,10 +2,10 @@
 package control;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import model.UserAccount;
 
@@ -13,13 +13,13 @@ import model.UserAccount;
  *
  * @author karensaroc
  */
-@ManagedBean
 @Named(value = "loginPinControl")
 @SessionScoped
-public class LoginPinControl {
+public class LoginPinControl implements Serializable {
 
     private UserAccount user;
     private DataManager manager;
+    private String pin;
 
     private String topMessage;
     private String errorMessage;
@@ -29,7 +29,7 @@ public class LoginPinControl {
         try {
             manager = DataManager.getInstance();
             user = manager.getCurrentUser();
-            topMessage = "Welcome " + user.getFirstName() + "\nPlease enter the PIN we have sent by phone text.";
+            topMessage = "Welcome " + user.getFirstName() + ".\n Please enter the PIN we have sent by phone text.";
 
         } catch (IOException e) {
             Logger.getLogger(LoginControl.class.getName()).log(Level.SEVERE, null, e);
@@ -37,6 +37,14 @@ public class LoginPinControl {
                     + "Please try again later.";
         }
 
+    }
+
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
     }
 
     public String getTopMessage() {
@@ -53,6 +61,10 @@ public class LoginPinControl {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+    
+    public String login(){
+        return "main";
     }
 
     private void clearMessages() {

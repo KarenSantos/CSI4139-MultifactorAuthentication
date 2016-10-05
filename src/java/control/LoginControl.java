@@ -1,10 +1,10 @@
 package control;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import model.PasswordService;
 import model.UserAccount;
@@ -13,10 +13,9 @@ import model.UserAccount;
  *
  * @author karensaroc
  */
-@ManagedBean
-@Named(value = "loginControl")
+@Named("loginControl")
 @SessionScoped
-public class LoginControl {
+public class LoginControl implements Serializable {
 
     private DataManager manager;
 
@@ -71,7 +70,7 @@ public class LoginControl {
     }
 
     public String login() {
-        String returnPage = "unauthorized";
+        String returnPage = null;
         PasswordService ps = null;
         while (ps == null) {
             ps = PasswordService.getInstance();
@@ -83,16 +82,18 @@ public class LoginControl {
                 UserAccount user = manager.login(email);
                 if (user != null) {
                     if (encryptedPW.equals(user.getPassword())) {
+                        clearMessages();
                         topMessage = "login successful";
                         returnPage = "loginPin";
                     } else {
                         clearMessages();
                         errorMessage = "Incorrect password or email.";
+                        returnPage = "login?faces-redirect=true";
                     }
                 } else {
                     clearMessages();
-                    errorMessage = "Incorrect email or password.";
-
+                    errorMessage = "Incorrect email or password.";                  
+                    returnPage = "login?faces-redirect=true";
                 }
             } catch (Exception e) {
                 errorMessage = "Could not connect to the database. \nTry again later.";
