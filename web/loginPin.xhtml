@@ -25,14 +25,13 @@
                     <h:form>
                         <h:panelGrid columns="2" cellpadding="5">
                             <p:outputLabel for="pin" value="PIN:" />
-                            <p:inputText 
-                                id="pin" 
-                                value="#{loginPinControl.pin}" 
-                                required="true" 
-                                requiredMessage="A PIN number is required" 
-                                size="30"
-                                maxlength="30"
-                                label="pin" />
+                            <p:password id="pin" 
+                                        value="#{loginPinControl.pin}" 
+                                        required="true" 
+                                        requiredMessage="A PIN number is required" 
+                                        size="30"
+                                        maxlength="10"
+                                        label="pin" />
 
                             <f:facet name="footer">
                                 <p:commandButton value="Login" action="#{loginPinControl.login}" style="width:100px;float:right"/>

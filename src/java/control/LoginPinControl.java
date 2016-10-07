@@ -1,4 +1,3 @@
-
 package control;
 
 import java.io.IOException;
@@ -7,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import model.Email;
 import model.UserAccount;
 
 /**
@@ -17,9 +17,12 @@ import model.UserAccount;
 @SessionScoped
 public class LoginPinControl implements Serializable {
 
+    private final String CONTENT = "Your PIN number is: ";
+    
     private UserAccount user;
     private DataManager manager;
     private String pin;
+    private String pinSent;
 
     private String topMessage;
     private String errorMessage;
@@ -29,6 +32,11 @@ public class LoginPinControl implements Serializable {
         try {
             manager = DataManager.getInstance();
             user = manager.getCurrentUser();
+            this.pinSent = generatePIN();
+
+            Email email = new Email(manager.getCurrentUser().getEmail());
+            email.sendGmail(CONTENT + pinSent);
+
             topMessage = "Welcome " + user.getFirstName() + ".\n Please enter the PIN we have sent by phone text.";
 
         } catch (IOException e) {
@@ -62,13 +70,25 @@ public class LoginPinControl implements Serializable {
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
-    
-    public String login(){
-        return "main";
+
+    public String login() {
+        String returnPage;
+        if (pin.equals(pinSent)) {
+            returnPage = "main";
+        } else {
+            clearMessages();
+            errorMessage = "PIN Incorrect. Please check your phone.";
+            returnPage = "loginPin?faces-redirect=true";
+        }
+        return returnPage;
     }
 
     private void clearMessages() {
         topMessage = "";
         errorMessage = "";
+    }
+
+    private String generatePIN() {
+        return "00000";
     }
 }

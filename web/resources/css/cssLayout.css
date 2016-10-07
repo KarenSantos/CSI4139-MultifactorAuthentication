@@ -3,8 +3,9 @@
     position: relative;
     background-color: #036fab;
     color: white;
-    padding: 5px;
+    padding: 20px;
     margin: 0px 0px 10px 0px;
+    font-size: 48px;
 }
 
 #bottom {
