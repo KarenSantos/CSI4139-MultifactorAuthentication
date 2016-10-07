@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigInteger;
 import model.UserAccount;
 
 /**
@@ -21,6 +22,8 @@ public class DataManager {
     private final String passwordPath = "web/resources/DB/password/pwd.txt";
     
     private UserAccount currentUser;
+    private BigInteger alpha;
+    private BigInteger beta;
 
     private DataManager() throws IOException {
         ///Applications/NetBeans/glassfish-4.1/glassfish/domains/domain1/config
@@ -66,6 +69,22 @@ public class DataManager {
     
     public UserAccount getCurrentUser(){
         return currentUser;
+    }
+
+    public BigInteger getAlpha() {
+        return alpha;
+    }
+
+    public void setAlpha(BigInteger alpha) {
+        this.alpha = alpha;
+    }
+
+    public BigInteger getBeta() {
+        return beta;
+    }
+
+    public void setBeta(BigInteger beta) {
+        this.beta = beta;
     }
 
     private UserAccount findUser(String email) throws FileNotFoundException, IOException {

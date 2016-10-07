@@ -2,11 +2,11 @@ package control;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import model.Email;
 import model.UserAccount;
 
 /**
@@ -17,12 +17,9 @@ import model.UserAccount;
 @SessionScoped
 public class LoginPinControl implements Serializable {
 
-    private final String CONTENT = "Your PIN number is: ";
-    
     private UserAccount user;
     private DataManager manager;
     private String pin;
-    private String pinSent;
 
     private String topMessage;
     private String errorMessage;
@@ -32,11 +29,7 @@ public class LoginPinControl implements Serializable {
         try {
             manager = DataManager.getInstance();
             user = manager.getCurrentUser();
-            this.pinSent = generatePIN();
-
-            Email email = new Email(manager.getCurrentUser().getEmail());
-            email.sendGmail(CONTENT + pinSent);
-
+           
             topMessage = "Welcome " + user.getFirstName() + ".\n Please enter the PIN we have sent by phone text.";
 
         } catch (IOException e) {
@@ -72,8 +65,12 @@ public class LoginPinControl implements Serializable {
     }
 
     public String login() {
+        // TODO limit number of failures!! Start over with new PIN.
         String returnPage;
-        if (pin.equals(pinSent)) {
+        System.out.println("Entered PIN: \n" + pin);
+        System.out.println("Beta: \n" + manager.getBeta());
+        
+        if (pin.equals(bigToHexString(manager.getBeta()))) {
             returnPage = "main";
         } else {
             clearMessages();
@@ -87,8 +84,12 @@ public class LoginPinControl implements Serializable {
         topMessage = "";
         errorMessage = "";
     }
-
-    private String generatePIN() {
-        return "00000";
+    
+    private String bigToHexString(BigInteger number) {
+        String result = "";
+        for (byte b : number.toByteArray()) {
+            result += String.format("%02x", b);
+        }
+        return result;
     }
 }

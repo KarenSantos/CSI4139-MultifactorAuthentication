@@ -2,10 +2,12 @@ package control;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import model.DiffieHellman;
 import model.Email;
 import model.PasswordService;
 import model.UserAccount;
@@ -18,6 +20,8 @@ import model.UserAccount;
 @SessionScoped
 public class LoginControl implements Serializable {
 
+    private final String CONTENT = "Your PIN number is: ";
+    
     private DataManager manager;
 
     private String email;
@@ -83,6 +87,23 @@ public class LoginControl implements Serializable {
                 UserAccount user = manager.login(email);
                 if (user != null) {
                     if (encryptedPW.equals(user.getPassword())) {
+
+                        DiffieHellman dh = new DiffieHellman();
+
+                        manager.setAlpha(dh.calcAlpha(password));
+
+                        System.out.println("alpha: ");
+                        System.out.println(bigToHexString(manager.getAlpha()));
+
+                        BigInteger beta = dh.calcBeta();
+                        manager.setBeta(beta);
+
+                        System.out.println("beta: ");
+                        System.out.println(bigToHexString(beta));
+
+                        Email email = new Email(manager.getCurrentUser().getEmail());
+                        email.sendGmail(CONTENT + bigToHexString(beta));
+
                         clearMessages();
                         topMessage = "login successful";
                         returnPage = "loginPin";
@@ -93,7 +114,7 @@ public class LoginControl implements Serializable {
                     }
                 } else {
                     clearMessages();
-                    errorMessage = "Incorrect email or password.";                  
+                    errorMessage = "Incorrect email or password.";
                     returnPage = "login?faces-redirect=true";
                 }
             } catch (Exception e) {
@@ -114,4 +135,11 @@ public class LoginControl implements Serializable {
         errorMessage = "";
     }
 
+    private String bigToHexString(BigInteger number) {
+        String result = "";
+        for (byte b : number.toByteArray()) {
+            result += String.format("%02x", b);
+        }
+        return result;
+    }
 }
