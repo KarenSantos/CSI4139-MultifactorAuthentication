@@ -4,24 +4,31 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
-    
+
     <h:body>
-        
+
         <ui:composition template="./template.xhtml">
-            
+
             <ui:define name="left">
+                <p><p:button outcome="index" value="Home"></p:button></p>
                 <p><p:button outcome="signup" value="Sign Up"></p:button></p>
                 <p><p:button outcome="login" value="Login"></p:button></p>
-                <p><p:button outcome="lab4" value="Lab 4"></p:button></p>
             </ui:define>
 
             <ui:define name="content">
                 <h2> Welcome to our very Secure System</h2>
-                <p>Sign Up or Login to continue</p>
+                <p>Let's try some inputs.</p>
+
+                <div style="position:fixed;left: 500px">
+                    <p>Choose your input option:</p>
+
+                    <p><p:button outcome="notProtected" value="Not Protected"></p:button></p>
+                    <p><p:button outcome="protected" value="Protected"></p:button></p>
+                </div>
             </ui:define>
 
         </ui:composition>
-        
+
     </h:body>
 </html>
 
