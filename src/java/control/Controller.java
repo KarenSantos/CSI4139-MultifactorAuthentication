@@ -1,6 +1,8 @@
 // fix reset button
 // css
-// 
+// http://www.smsgateway.ca/
+// http://www.emailtextmessages.com/
+// https://www.twilio.com/
 
 package control;
 

@@ -14,25 +14,22 @@ public class DiffieHellman {
 
     private static final SecureRandom rnd = new SecureRandom();
 
-    private int bitLength = 512;
-    private int certainty = 20;// probabilistic prime generator 1-2^-certainty => practically 'almost sure'
+    final private int BIT_LENGTH = 512;
+    final private int CERTAINTY = 20;// probabilistic prime generator 1-2^-certainty => practically 'almost sure'
 
     private BigInteger primeValue;
     private BigInteger generatorValue;
 
     public DiffieHellman() {
-
         // Generating g and p
         primeValue = findPrime();
         generatorValue = findPrimeRoot(primeValue);
-//        primeValue = 23;
-//        generatorValue = 5;  
     }
 
     private BigInteger findPrime() {
         Random rnd = new Random();
         BigInteger p = BigInteger.ZERO;
-        p = new BigInteger(bitLength, certainty, rnd);// sufficiently NSA SAFE?!!
+        p = new BigInteger(BIT_LENGTH, CERTAINTY, rnd);// sufficiently NSA SAFE?!!
         return p;
     }
 
@@ -141,7 +138,7 @@ public class DiffieHellman {
     }
 
     public BigInteger calcBeta() {
-        BigInteger secretB = new BigInteger(bitLength, rnd);
+        BigInteger secretB = new BigInteger(BIT_LENGTH, rnd);
         BigInteger beta = generatorValue.modPow(secretB, primeValue);
         return beta;
     }

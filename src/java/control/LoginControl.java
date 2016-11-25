@@ -92,6 +92,7 @@ public class LoginControl implements Serializable {
 
                         manager.setAlpha(dh.calcAlpha(password));
 
+                        // Here we are not using the value of Alpha
                         System.out.println("alpha: ");
                         System.out.println(bigToHexString(manager.getAlpha()));
 
